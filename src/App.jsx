@@ -1,15 +1,33 @@
 import { useState } from 'react'
-
 import './App.css'
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [students, setStudents] = useState([]);
+
+  useEffect(()=>{
+      ;(async () =>{
+        const response = await axios.get('/api/students')
+        console.log(response)
+        setStudents(response.data)
+      })()
+
+    }, []
+  )
 
   return (
     <>
-      <h2> This is front end project</h2>
-      <h2>{count}</h2>
-      <button onClick={()=>{setCount(count + 1)}}>Click</button>
+      
+      <h2>Number of items: {students.length}</h2>
+      <div>
+        {students.map((student)=>{
+        return <div id='student.id'>
+          <h2>{student.name} </h2>
+        </div>
+        })}
+      </div>
+      
 
     </>
   )
