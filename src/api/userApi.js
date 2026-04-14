@@ -1,7 +1,12 @@
-import { asyncHandler } from "../utils/AsyncHandler.js";
-import apiClient from "./apiClient"
+import asyncHandler  from "../utils/AsyncHandler.js";
+import {apiClient} from "./apiClient"
 
 const USER_BASE_URL = '/api/v1/users'
+
+const server = ()=> asyncHandler(async()=>{
+    const res = await apiClient.get('/server')
+    return res.data;
+})
 
 // Fetches user channel information based on user ID
 const getUserChannelInfo = (userId) => asyncHandler(async () => {
@@ -87,6 +92,7 @@ const searchUser = (query) => asyncHandler(async () => {
 })
 
 export {
+    server,
   getUserChannelInfo,
   getUserVideos,
   loginUser,
