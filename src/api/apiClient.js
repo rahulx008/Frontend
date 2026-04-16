@@ -3,6 +3,7 @@ import asyncHandler from "../utils/AsyncHandler";
 
 export const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL ,
+    withCredentials: true, // include cookies in requests
     headers: {
         "Content-Type": "application/json",
     },
