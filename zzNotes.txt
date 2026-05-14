@@ -1,0 +1,11 @@
+set query parameters for Comment, Like and Video APIs
+
+ApI writing - Done
+Context - Done
+
+Next steps:
+Implement the APIs for Comment, Like, and Video using the defined query parameters.
+Write queries for each API 
+write components
+write Pages
+Write routing

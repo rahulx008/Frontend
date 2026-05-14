@@ -3,10 +3,10 @@ import {apiClient} from "./apiClient"
 
 const USER_BASE_URL = '/api/v1/users'
 
-const server = ()=> asyncHandler(async()=>{
-    const res = await apiClient.get('/server')
-    return res.data;
-})
+// const server = ()=> asyncHandler(async()=>{
+//     const res = await apiClient.get('/api/v1/server')
+//     return res.data;
+// })
 
 // Fetches user channel information based on user ID
 const getUserChannelInfo = (userId) => asyncHandler(async () => {
@@ -92,18 +92,18 @@ const searchUser = (query) => asyncHandler(async () => {
 })
 
 export {
-    server,
-  getUserChannelInfo,
-  getUserVideos,
-  loginUser,
-  logoutUser,
-  getCurrentUser,
-  getUserWatchHistory,
-  changePassword,
-  updateAccountDetails,
-  clearWatchHistory,
-  registerUser,
-  updateAvatar,
-  updateCoverImage,
-  searchUser
+    // server,
+    getUserChannelInfo,
+    getUserVideos,
+    loginUser,
+    logoutUser,
+    getCurrentUser,
+    getUserWatchHistory,
+    changePassword,
+    updateAccountDetails,
+    clearWatchHistory,
+    registerUser,
+    updateAvatar,
+    updateCoverImage,
+    searchUser
 }

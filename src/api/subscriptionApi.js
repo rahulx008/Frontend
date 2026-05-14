@@ -27,8 +27,8 @@ const getSubscribers = (limit = 3, page = 1, sortField = "createdAt", sortOrder 
 });
 
 export {
-  getUserSubscribedChannels,
-  getVideosFromSubscribedChannels,
-  toggleSubscription,
-  getSubscribers
+    getUserSubscribedChannels,
+    getVideosFromSubscribedChannels,
+    toggleSubscription,
+    getSubscribers
 };
