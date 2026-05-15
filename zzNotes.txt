@@ -9,3 +9,7 @@ Write queries for each API
 write components
 write Pages
 Write routing
+
+
+[Done] User API 
+[] Video API
