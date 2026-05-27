@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useState, useEffect, useCallback, useContext } from "react";
 import {useGetCurrentUser, useLogin, useRegister, useLogout} from "../queries/userQueries.js";
 
 
@@ -24,7 +24,7 @@ export const getAuthSetters = () => authSetters;
 
 
 
-const authContext = createContext({
+const AuthContext = createContext({
     user: null,
     register: async ()=>{},
     login: async ()=>{},
@@ -33,7 +33,7 @@ const authContext = createContext({
     isAuthenticated: false,
 });
 
-const AuthProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
 
     //if user data is stored in local storage, we can use it to initialize the user state, otherwise we start with null.
     const [user, setUser] = useState(() => {
@@ -47,11 +47,11 @@ const AuthProvider = ({ children }) => {
     }); 
 
     // This function will be called to update the user state and also persist it in local storage, ensuring that the user's authentication state is maintained across page reloads.
-    const hasAccessToken = Boolean(localStorage.getItem("accessToken"));
+        const hasAccessToken = Boolean(localStorage.getItem("accessToken"));
 
-    const { data: currentUser, isLoading: loadingUserData } = useGetCurrentUser({
-        enabled: !!user?._id && hasAccessToken,
-    });
+        const { data: currentUser, isLoading: loadingUserData } = useGetCurrentUser({
+            enabled: !!user?._id && hasAccessToken,
+        });
 
     const { mutateAsync: registerMutation, isLoading: registering } = useRegister();
     const { mutateAsync: loginMutation, isLoading: loggingIn } = useLogin();

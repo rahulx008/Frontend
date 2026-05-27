@@ -1,5 +1,7 @@
 import axios from "axios";
 import asyncHandler from "../utils/AsyncHandler";
+import { getAuthSetters } from "../context/authContext";
+import { logoutUser } from "../api/userApi";
 
 export const apiClient = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL ,
@@ -83,13 +85,18 @@ apiClient.interceptors.response.use(
             isRefreshing = true;
 
             try {
+                
                 // Request a new access token using the refresh token
                 const refreshResponse = await apiClient.post('/api/v1/users/refresh-access-token', {}, { withCredentials: true });
+                
+                console.log('Refresh token response:', refreshResponse);
 
                 const newAccessToken = refreshResponse.data.data.accessToken;
 
                 localStorage.setItem('accessToken', newAccessToken);
 
+                console.log('New access token obtained:', newAccessToken);
+                
                 // Process all queued requests with the new token
                 processQueue(null, newAccessToken);
 
@@ -112,8 +119,8 @@ apiClient.interceptors.response.use(
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('user');
 
-                // const { setUser } = getAuthSetters()
-                // setUser(null);
+                const { setUser } = getAuthSetters()
+                setUser(null);
 
                 try {
 

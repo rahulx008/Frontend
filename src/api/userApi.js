@@ -42,7 +42,7 @@ const logoutUser = () => asyncHandler(async () => {
 
 // Fetches current logged-in user information
 const getCurrentUser = () => asyncHandler(async () => {
-    const res = await apiClient.get(`${USER_BASE_URL}/current-user`);
+    const res = await apiClient.get(`${USER_BASE_URL}/get-current-user`);
     return res.data;
 })
 

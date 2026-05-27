@@ -2,9 +2,12 @@ import { useState } from 'react'
 import './App.css'
 import { useEffect } from 'react';
 import axios from 'axios';
-import VideoCard from './components/VideoCard.jsx';
-import SearchBar from './components/SearchBar.jsx';
-import VideoGrid from './components/VideoGrid.jsx';
+import AuthProvider from './context/authContext.jsx'
+import { useGetCurrentUser } from './queries/userQueries.js';
+import {Logo, SearchBar, UserRenderer} from './components/header/index.js'
+import Login from './pages/auth/login.jsx';
+import Logout from './pages/auth/logout.jsx';
+
 
 
   const videos = [
@@ -55,13 +58,21 @@ import VideoGrid from './components/VideoGrid.jsx';
 export default function App() {
 
   return (
-    <>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My App</h1>
-      <SearchBar/>
-      <VideoGrid videos={videos} />
+    <AuthProvider >
+      <div>
+        <Logo />
+        <SearchBar />
+        <UserRenderer />
+      </div>
     
+      <br />
+      <Login />
 
-    </>
+      <br />
+
+      <Logout />
+
+    </AuthProvider>
   )
 }
 

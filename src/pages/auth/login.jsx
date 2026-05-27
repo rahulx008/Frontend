@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
-import { loginUser } from "../../api/userApi.js";
 import { useState } from "react";
+import { useAuth } from "../../context/authContext.jsx";
 
 export default function Login() {
     const { register, handleSubmit } = useForm();
+    const { login } = useAuth();
 
     const [error, setError] =useState('');
 
@@ -13,7 +14,7 @@ export default function Login() {
         setError('')
         try {
             setError('')
-            const loggedin= await loginUser(formData)
+            const loggedin= await login(formData)
             
             console.log(loggedin)
         } catch (err) {

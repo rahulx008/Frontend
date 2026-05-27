@@ -110,7 +110,7 @@ export default function VideoCard({
 
         .title {
           margin: 0;
-          color: #0f0f0f;
+          color: #ffffff;
           font-size: 16px;
           font-weight: 500;
           line-height: 1.4;
@@ -129,7 +129,7 @@ export default function VideoCard({
 
         .channel {
           font-size: 14px;
-          color: #606060;
+          color: #cbd5e1; /* light gray for dark background */
         }
 
         .verified {
@@ -139,7 +139,7 @@ export default function VideoCard({
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          background: #606060;
+          background: #64748b;
           color: white;
           font-size: 10px;
         }
@@ -147,7 +147,7 @@ export default function VideoCard({
         .meta {
           margin: 2px 0 0;
           font-size: 14px;
-          color: #606060;
+          color: #94a3b8;
         }
 
         .menu-btn {

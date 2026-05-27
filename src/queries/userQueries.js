@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import {
     // server,
     getUserChannelInfo,
@@ -29,16 +29,16 @@ const useGetCurrentUser = (options = {}) => {
 
 const useRegister = () => {
     return useMutation({
-        mutationFn: (data)=>{
-            registerUser(data)
-        }
+        mutationFn: (data) => registerUser(data)
     })
 }    
 
 const useLogin = () => {
+    const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (data)=>{
-            loginUser(data)
+        mutationFn: (data) => loginUser(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries(['currentUser']);
         }
     })
 }
