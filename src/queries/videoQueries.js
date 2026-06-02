@@ -1,18 +1,16 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-    getVideoById,
-    publishVideo,
-    updateVideo,
     deleteVideo,
     getAllVideos,
-    getRelatedVideos 
+    getRelatedVideos,
+    getVideoById,
+    publishVideo,
+    updateVideo
 } from "../api/videoApi.js";
-import { use } from "react";
 
 const usePublishVideo = () => {
     return useMutation({
         mutationFn: (formData) => publishVideo(formData)
-        
     })
 }
 
@@ -23,8 +21,8 @@ const useGetVideoById = (videoId) => {
     queryFn: async () => {
       const data = await getVideoById(videoId);
       // Invalidate the user history query
-    //   queryClient.invalidateQueries({ queryKey: ['watch_history'] });
-    //   queryClient.invalidateQueries({ queryKey: ['stats'] });
+      // queryClient.invalidateQueries({ queryKey: ['watch_history'] });
+      // queryClient.invalidateQueries({ queryKey: ['stats'] });
       return data;
     },
   })
@@ -41,10 +39,49 @@ const useDeleteVideo = (videoId) => {
     })
 }
 
-const useGetAllVideos = (limit=10) => {
+
+const useFetchVideos = (
+  searchParams,
+  {
+    limit = 10,
+    ...queryOptions
+  } = {}
+) => {
+  const queryString = new URLSearchParams({
+    ...searchParams,
+    limit,
+  }).toString();
+
+  return useInfiniteQuery({
+    queryKey: ["videos", queryString],
+
+    queryFn: ({ pageParam = null }) => {
+      const params = new URLSearchParams({
+        ...searchParams,
+        limit,
+      });
+
+      if (pageParam) {
+        params.set("cursor", pageParam);
+      }
+
+      return getAllVideos(params.toString());
+    },
+
+    getNextPageParam: (lastPage) =>
+      lastPage?.data?.hasMore
+        ? lastPage.data.nextCursor
+        : undefined,
+
+    ...queryOptions,
+  });
+};
+
+const useGetAllVideos = (limit = 10) => {
+    
     return useInfiniteQuery({
         queryKey: ['videos', { limit }],
-        queryFn: ({ pageParam = 1 }) => fetchAllVideos(`limit=${limit}&page=${pageParam}`),
+        queryFn: ({ pageParam = 1 }) => getAllVideos(`limit=${limit}&page=${pageParam}`),
         getNextPageParam: (lastPage) => lastPage?.data?.nextPage || null,
     })
 }
@@ -52,8 +89,15 @@ const useGetAllVideos = (limit=10) => {
 const useGetRelatedVideos = (videoId) => {
     return useInfiniteQuery({
         queryKey: ['videos', 'related_videos', { videoId }],
-        queryFn: ({ pageParam = 1 }) => getRelatedVideos(videoId, pageParam, limit),
+        queryFn: () => getRelatedVideos(videoId),
         getNextPageParam: (lastPage) => lastPage?.data?.nextPage || null,
         keepPreviousData: true,
     })
 }
+
+export {
+    useDeleteVideo, useFetchVideos,
+    useGetAllVideos,
+    useGetRelatedVideos, useGetVideoById, usePublishVideo, useUpdateVideo
+};
+

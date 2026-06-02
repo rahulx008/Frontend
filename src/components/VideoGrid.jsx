@@ -1,18 +1,31 @@
+import { useSearchParams } from "react-router-dom";
+import { useFetchVideos } from "../queries/videoQueries.js";
 import VideoCard from "./VideoCard";
 
-export default function VideoGrid({
-  videos = [],
-}) {
+export default function VideoGrid() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query");
+
+  // const { data: videos = [] } = useFetchVideos({ query }, {
+  //   enabled: true,
+  //   refetchOnWindowFocus: false,
+  //   refetchOnReconnect: false,
+  // });
+
+  const { data: videos = [], isLoading: loadingResults, hasNextPage } = useFetchVideos(searchParams)
+
+  const resultVideos =  videos?.pages?.flatMap(page => page.data.videos) || [];
+
+
   return (
     <section className="video-grid-section">
       <div className="video-grid">
-        {videos.map((video) => (
+        {resultVideos.map((video) => (
           <VideoCard
-            key={video.id}
+            key={video._id}
             thumbnail={video.thumbnail}
             title={video.title}
-            channel={video.channel}
-            verified={video.verified}
+            channel={video.owner.name}
             views={video.views}
             uploadedAt={video.uploadedAt}
             duration={video.duration}

@@ -1,79 +1,69 @@
-import { useState } from 'react'
-import './App.css'
-import { useEffect } from 'react';
-import axios from 'axios';
-import AuthProvider from './context/authContext.jsx'
-import { useGetCurrentUser } from './queries/userQueries.js';
-import {Logo, SearchBar, UserRenderer} from './components/header/index.js'
-import Login from './pages/auth/login.jsx';
-import Logout from './pages/auth/logout.jsx';
+import { Spinner, Theme } from "@radix-ui/themes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
+import AuthProvider from "./context/authContext";
+import AppRouter from "./provider/RouterProvider";
 
-
-
-  const videos = [
-  {
-    id: 1,
-    thumbnail:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-    title:
-      "Build a Stunning YouTube Clone UI with React & Next.js",
-    channel: "Code Studio",
-    verified: true,
-    views: "1.2M",
-    uploadedAt: "2 days ago",
-    duration: "12:45",
-    avatar:
-      "https://i.pravatar.cc/150?img=12",
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 2 * 1000,
+      refetchOnReconnect: "always",
+      retry: 2,
+      refetchOnWindowFocus: false,
+    },
   },
-  {
-    id: 2,
-    thumbnail:
-      "https://images.unsplash.com/photo-1515879218367-8466d910aaa4",
-    title:
-      "Responsive CSS Grid Layout Masterclass",
-    channel: "Frontend Pro",
-    verified: false,
-    views: "98K",
-    uploadedAt: "1 week ago",
-    duration: "8:10",
-    avatar:
-      "https://i.pravatar.cc/150?img=18",
-  },
-  {
-    id: 3,
-    thumbnail:
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
-    title:
-      "Learn React in 30 Minutes — Beginner Friendly",
-    channel: "Dev Master",
-    verified: true,
-    views: "540K",
-    uploadedAt: "5 days ago",
-    duration: "30:15",
-    avatar:
-      "https://i.pravatar.cc/150?img=22",
-  },
-];
+});
 
-export default function App() {
+const toastStyles = {
+  backgroundColor: "#09090b",
+  minWidth: "240px",
+  fontSize: "14px",
+  color: "#fafafa",
+  border: "1px solid #484848",
+  padding: "12px",
+  boxShadow:
+    "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+};
 
+const toastErrorStyles = {
+  backgroundColor: "#7f1d1d",
+  border: "1px solid #7f1d1d",
+};
+
+function App() {
   return (
-    <AuthProvider >
-      <div>
-        <Logo />
-        <SearchBar />
-        <UserRenderer />
-      </div>
-    
-      <br />
-      <Login />
-
-      <br />
-
-      <Logout />
-
-    </AuthProvider>
-  )
+    <>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <ThemeProvider
+            attribute={"class"}
+            disableTransitionOnChange
+            defaultTheme="dark"
+          >
+            <Theme accentColor="blue">
+              <AppRouter />
+              <Toaster
+                position="bottom-left"
+                toastOptions={{
+                  style: toastStyles,
+                  error: {
+                    icon: false,
+                    style: toastErrorStyles,
+                  },
+                  success: { icon: false },
+                  loading: { icon: <Spinner size={"3"} /> },
+                }}
+              />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </Theme>
+          </ThemeProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </>
+  );
 }
 
-
+export default App;

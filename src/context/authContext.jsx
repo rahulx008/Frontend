@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect, useCallback, useContext } from "react";
-import {useGetCurrentUser, useLogin, useRegister, useLogout} from "../queries/userQueries.js";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { useGetCurrentUser, useLogin, useLogout, useRegister } from "../queries/userQueries.js";
 
 
 /* Authsetters are used to update the auth context from outside the 
@@ -67,11 +67,8 @@ export const AuthProvider = ({ children }) => {
         if (currentUser?.data) {
             setUser(currentUser.data);
             localStorage.setItem("user", JSON.stringify(currentUser.data));
-        } else if (!currentUser && !user?._id) {
-            localStorage.removeItem("user");
-            setUser(null);
-        }
-    }, [currentUser]);
+        } 
+    }, [currentUser, user]);
 
     useEffect(() => {
         setauthSetters(setUser);
@@ -112,7 +109,7 @@ export const AuthProvider = ({ children }) => {
     );
 
     const data = {
-        user: currentUser?.data || user,
+        user,
         setUser,
         login,
         register,

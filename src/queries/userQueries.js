@@ -1,20 +1,17 @@
-import { useMutation, useQuery, useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+    changePassword,
+    getCurrentUser,
     // server,
     getUserChannelInfo,
-    getUserVideos,
+    getUserWatchHistory,
     loginUser,
     logoutUser,
-    getCurrentUser,
-    getUserWatchHistory,
-    changePassword,
-    updateAccountDetails,
-    clearWatchHistory,
     registerUser,
+    updateAccountDetails,
     updateAvatar,
-    updateCoverImage,
-    searchUser
-} from "../api/userApi.js"; 
+    updateCoverImage
+} from "../api/userApi.js";
 
 
 
@@ -48,7 +45,9 @@ const useLogout = () => {
     return useMutation({
         mutationFn: logoutUser,
         onSuccess: () => {
-            queryClient.invalidateQueries(['currentUser']);
+            queryClient.removeQueries({
+                queryKey: ['currentUser'],
+            });
         } 
     })  
 }
@@ -107,7 +106,8 @@ const useGetUserWatchHistory = (user, limit = 3) => {
 
 
 
-export { useGetCurrentUser, useRegister, useLogin, 
-    useLogout, useChangePassword, useUpdateAccountDetails, 
-    useUpdateAvatar, useUpdateCoverImage, useGetUserChannelInfo, useGetUserWatchHistory
+export {
+    useChangePassword, useGetCurrentUser, useGetUserChannelInfo, useGetUserWatchHistory, useLogin,
+    useLogout, useRegister, useUpdateAccountDetails,
+    useUpdateAvatar, useUpdateCoverImage
 };
