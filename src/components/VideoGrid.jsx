@@ -12,9 +12,12 @@ export default function VideoGrid() {
   //   refetchOnReconnect: false,
   // });
 
+  // console.log("Search query:Grid::", query);
+  // console.log("Search params: Grid:: :", searchParams.toString());
+
   const { data: videos = [], isLoading: loadingResults, hasNextPage } = useFetchVideos(searchParams)
 
-  const resultVideos =  videos?.pages?.flatMap(page => page.data.videos) || [];
+  const resultVideos = videos?.pages?.flatMap(page => page.data.videos) || [];
 
 
   return (

@@ -31,7 +31,7 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
   const { pathname } = useLocation()
   const { theme, setTheme } = useTheme()
   const inputRef = useRef()
-  const { isFetching } = useGetAllVideos(searchParams)
+  const { isFetching } = useGetAllVideos()
 
   const isVideoRoute = VIDEO_ROUTE_PATTERN.test(pathname)
   const dashboardRoute = DASHBOARD_ROUTE_PATTERN.test(pathname)
@@ -49,7 +49,7 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
     }
 
     const nextParams = new URLSearchParams({ query: trimmedQuery })
-    navigate({ pathname: '/searchResult', search: nextParams.toString() })
+    navigate(`/searchresult?${nextParams.toString()}`)
   }
 
   const handleLogout = async () => {

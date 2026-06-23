@@ -29,6 +29,9 @@ const deleteVideo = (videoId) => asyncHandler(async () => {
 });
 
 const getAllVideos = (filters) => asyncHandler(async () => {
+
+    console.log("Fetching videos with filters::", filters);
+    
     const res = await apiClient.get(`${VIDEO_BASE_URL}/getAllVideos?${filters}`);
     return res.data;
 });
@@ -39,10 +42,10 @@ const getRelatedVideos = (videoId) => asyncHandler(async () => {
 });
 
 export {
-    getVideoById,
-    publishVideo,
-    updateVideo,
     deleteVideo,
     getAllVideos,
-    getRelatedVideos
-}
+    getRelatedVideos, getVideoById,
+    publishVideo,
+    updateVideo
+};
+

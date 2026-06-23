@@ -18,51 +18,51 @@ const router = createBrowserRouter(
       <Route path="/" element={<Root />}>
         {/* Home Page */}
         <Route
-            index
-            lazy={() =>
-                import("../pages/Home.jsx").then(({ default: Home }) => ({
-                Component: Home,
-                }))
-            }
+          index
+          lazy={() =>
+            import("../pages/Home.jsx").then(({ default: Home }) => ({
+              Component: Home,
+            }))
+          }
         />
 
         {/* Login Page */}
         <Route element={<PublicRoute />}>
           <Route
-              path="login"
-              lazy={() =>
-                  import("../pages/auth/Login.jsx").then(({ default: Login }) => ({
-                  Component: Login,
-                  }))
-              }
+            path="login"
+            lazy={() =>
+              import("../pages/auth/Login.jsx").then(({ default: Login }) => ({
+                Component: Login,
+              }))
+            }
           />
-      
-      
+
+
         </Route>
 
+
+        <Route
+          path="searchresult"
+          lazy={() =>
+            import("../components/VideoGrid.jsx").then(({ default: SearchResult }) => ({
+              Component: SearchResult,
+            }))
+          }
+        />
 
         <Route element={<ProtectedRoute />}>
-          {/* Logout Page */ }
+          {/* Logout Page */}
           <Route
-              path="logout"
-              lazy={() =>
-                  import("../pages/auth/Logout.jsx").then(({ default: Logout }) => ({
-                  Component: Logout,
-                  }))
-              }
-          />
-
-          <Route
-              path="searchResult"
-              lazy={() =>
-                  import("../components/VideoGrid.jsx").then(({ default: SearchResult }) => ({
-                  Component: SearchResult,
-                  }))
-              }
+            path="logout"
+            lazy={() =>
+              import("../pages/auth/Logout.jsx").then(({ default: Logout }) => ({
+                Component: Logout,
+              }))
+            }
           />
         </Route>
 
-            
+
       </Route>
     </Route>,
   ),

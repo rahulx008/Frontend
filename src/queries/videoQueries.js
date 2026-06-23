@@ -40,42 +40,20 @@ const useDeleteVideo = (videoId) => {
 }
 
 
-const useFetchVideos = (
-  searchParams,
-  {
-    limit = 10,
-    ...queryOptions
-  } = {}
-) => {
-  const queryString = new URLSearchParams({
-    ...searchParams,
-    limit,
-  }).toString();
+const useFetchVideos = (searchParams) => {
 
-  return useInfiniteQuery({
-    queryKey: ["videos", queryString],
+    const limit = searchParams.get('limit')||10;
+    console.log(limit);
 
-    queryFn: ({ pageParam = null }) => {
-      const params = new URLSearchParams({
-        ...searchParams,
-        limit,
-      });
-
-      if (pageParam) {
-        params.set("cursor", pageParam);
-      }
-
-      return getAllVideos(params.toString());
-    },
-
-    getNextPageParam: (lastPage) =>
-      lastPage?.data?.hasMore
-        ? lastPage.data.nextCursor
-        : undefined,
-
-    ...queryOptions,
-  });
-};
+    console.log("searchParams: Fetch::", searchParams.toString());
+    return useInfiniteQuery({
+        queryKey: ['videos', searchParams.toString()],
+        queryFn: ({ pageParam = 1 }) => getAllVideos(`${searchParams.toString()}&limit=10&page=${pageParam}`),
+        getNextPageParam: (lastPage) => lastPage?.data?.nextPage || null,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: true,
+    })
+}
 
 const useGetAllVideos = (limit = 10) => {
     
