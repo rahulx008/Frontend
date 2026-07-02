@@ -9,8 +9,13 @@ export default function VideoCard({
   verified = false,
   onClick,
 }) {
+  //this is click function that will be called when the video card is clicked.It can be used to navigate to the video detail page or perform any other action related to the video.
+  const handleClick = () => {
+    console.log("VideoCard clicked:", title);
+  }
+
   return (
-    <div className="yt-card" onClick={onClick}>
+    <div className="yt-card" onClick={handleClick}>
       {/* Thumbnail */}
       <div className="thumbnail-wrapper">
         <img

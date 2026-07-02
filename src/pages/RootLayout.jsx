@@ -1,6 +1,6 @@
 import { Outlet, ScrollRestoration } from "react-router-dom";
-import TopLoadingBar from "../components/TopLoadingBar";
 import ErrorBoundary from "../components/ErrorBoundary";
+import TopLoadingBar from "../components/TopLoadingBar";
 
 function RootLayout() {
   return (

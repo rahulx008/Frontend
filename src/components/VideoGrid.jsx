@@ -41,7 +41,7 @@ export default function VideoGrid() {
         .video-grid-section {
           width: 100%;
           padding: 24px;
-          background: #0f0f0f;
+          background: linear-gradient(to right, cyan, indigo, pink);
           min-height: 100vh;
         }
 
