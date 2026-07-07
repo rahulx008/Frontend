@@ -41,81 +41,90 @@ export default function Login() {
 
     return (<>
 
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-cyan-400 via-indigo-500 to-pink-500 relative overflow-hidden">
+        <div className="min-h-screen flex items-center justify-center bg-bg-main text-text-main relative overflow-hidden transition-colors duration-200">
 
             {/* Background Shapes */}
-            <div className="absolute top-20 left-0 w-80 h-80 bg-white/10 rotate-45 rounded-3xl"></div>
-            <div className="absolute bottom-0 left-40 w-96 h-96 bg-white/5 rotate-45 rounded-3xl"></div>
-            <div className="absolute top-40 right-0 w-72 h-72 bg-black/10 rotate-45 rounded-3xl"></div>
+            <div className="absolute top-20 left-0 w-80 h-80 bg-primary/5 rotate-45 rounded-3xl"></div>
+            <div className="absolute bottom-0 left-40 w-96 h-96 bg-primary/5 rotate-45 rounded-3xl"></div>
+            <div className="absolute top-40 right-0 w-72 h-72 bg-primary/5 rotate-45 rounded-3xl"></div>
 
             <form onSubmit={handleSubmit(handleLogin)} className="relative z-10">
 
                 {/* Login Card */}
-                <div className="bg-white w-[420px] rounded-2xl shadow-2xl p-8 z-10">
+                <div className="bg-surface border border-border-main w-[420px] rounded-2xl shadow-2xl p-8 z-10">
 
                     {/* Title */}
-                    <h1 className="text-5xl font-bold text-center mb-10 text-gray-800">
+                    <h1 className="text-4xl font-extrabold text-center mb-8 text-text-main tracking-tight">
                         Login
                     </h1>
 
                     {/* Username */}
                     <div className="text-left mt-3">
-                        <label className="text-sm text-gray-700 justify-left">Username</label>
+                        <label className="text-xs font-semibold text-text-sub uppercase tracking-wider">Username</label>
                     </div>
-                    <div className="flex items-center border-b border-gray-300 py-3 mb-6">
-                        <PersonIcon className="text-gray-400 mr-3" />
+                    <div className="flex items-center border-b border-border-main py-3 mb-6 focus-within:border-primary transition-colors">
+                        <PersonIcon className="text-text-muted mr-3" />
                         <input
-                            type="text"
-                            {...register("username")}
-                            placeholder="Type your username"
-                            className="w-full outline-none text-gray-700 placeholder-gray-400"
+                          type="text"
+                          {...register("username")}
+                          placeholder="Type your username"
+                          className="w-full outline-none bg-transparent text-text-main placeholder-text-muted text-sm"
                         />
                     </div>
 
                     {/* Password */}
                     <div className="text-left mt-3">
-                        <label className="text-sm text-gray-700 ">Password</label>
+                        <label className="text-xs font-semibold text-text-sub uppercase tracking-wider">Password</label>
                     </div>
-                    <div className="flex items-center border-b border-gray-300 py-3">
-                        <LockClosedIcon className="text-gray-400 mr-3" />
+                    <div className="flex items-center border-b border-border-main py-3 focus-within:border-primary transition-colors">
+                        <LockClosedIcon className="text-text-muted mr-3" />
                         <input
-                            type={showPassword ? "text" : "password"}
-                            showPassword={false}
-                            {...register("password")}
-                            placeholder="Type your password"
-                            className="w-full outline-none text-gray-700 placeholder-gray-400"
+                          type={showPassword ? "text" : "password"}
+                          {...register("password")}
+                          placeholder="Type your password"
+                          className="w-full outline-none bg-transparent text-text-main placeholder-text-muted text-sm"
                         />
                         <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            className="ml-2 focus:outline-none"
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="ml-2 focus:outline-none cursor-pointer"
                         >
                             {showPassword ? (
-                                <EyeClosedIcon className="text-gray-400" />
+                              <EyeClosedIcon className="text-text-sub" />
                             ) : (
-                                <EyeOpenIcon className="text-gray-400" />
+                              <EyeOpenIcon className="text-text-sub" />
                             )}
                         </button>
                     </div>
 
-
-
                     {/* Forgot Password */}
                     <div className="text-right mt-3">
                         <a
-                            href="#"
-                            className="text-sm text-gray-500 hover:text-pink-500 transition"
+                          href="#"
+                          className="text-xs text-text-muted hover:text-primary transition"
                         >
                             Forgot Password?
                         </a>
                     </div>
 
                     {/* Login Button */}
-                    <button className="w-full mt-8 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-pink-500 text-white font-semibold text-lg shadow-lg hover:scale-105 transition duration-300"
-                        type="submit"
+                    <button className="w-full mt-8 py-3 rounded-xl bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-lg active:scale-95 transition duration-150 cursor-pointer"
+                      type="submit"
                     >
                         LOGIN
                     </button>
+
+                    {/* Redirect to Signup */}
+                    <div className="text-center mt-6 text-xs text-text-sub">
+                        Don't have an account?{" "}
+                        <button 
+                          type="button"
+                          onClick={() => navigate("/signup")} 
+                          className="text-primary hover:underline font-semibold bg-transparent border-none cursor-pointer"
+                        >
+                            Sign up here
+                        </button>
+                    </div>
 
                 </div>
 

@@ -42,18 +42,20 @@ function Root() {
   }, [showMenu]);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen bg-bg-main text-text-main transition-colors duration-200">
       <Navbar
         toggleMenu={toggleMenu}
         toggleDashboardSidebar={toggleDashboardSidebar}
       />
       
-
-        
-
-      <Outlet/>
-      
-      {/* {!isDashboardRoute && <BottomBar />} */}
+      <div className="flex flex-1 relative">
+        {!isVideoRoute && (
+          <Sidebar showMenu={showMenu} toggleMenu={toggleMenu} />
+        )}
+        <main className="flex-1 w-full overflow-x-hidden">
+          <Outlet />
+        </main>
+      </div>
 
       {!isOnline && <OfflineBanner />}
     </div>

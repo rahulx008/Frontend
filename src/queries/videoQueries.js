@@ -41,26 +41,29 @@ const useDeleteVideo = (videoId) => {
 
 
 const useFetchVideos = (searchParams) => {
-
-    const limit = searchParams.get('limit')||10;
-    console.log(limit);
-
-    console.log("searchParams: Fetch::", searchParams.toString());
+    const queryStr = searchParams.toString();
     return useInfiniteQuery({
-        queryKey: ['videos', searchParams.toString()],
-        queryFn: ({ pageParam = 1 }) => getAllVideos(`${searchParams.toString()}&limit=10&page=${pageParam}`),
-        getNextPageParam: (lastPage) => lastPage?.data?.nextPage || null,
+        queryKey: ['videos', queryStr],
+        queryFn: ({ pageParam = null }) => {
+            const cursorParam = pageParam ? `&cursor=${pageParam}` : "";
+            return getAllVideos(`${queryStr}&limit=10${cursorParam}`);
+        },
+        getNextPageParam: (lastPage) => lastPage?.data?.nextCursor || null,
+        initialPageParam: null,
         refetchOnWindowFocus: false,
         refetchOnReconnect: true,
     })
 }
 
 const useGetAllVideos = (limit = 10) => {
-    
     return useInfiniteQuery({
         queryKey: ['videos', { limit }],
-        queryFn: ({ pageParam = 1 }) => getAllVideos(`limit=${limit}&page=${pageParam}`),
-        getNextPageParam: (lastPage) => lastPage?.data?.nextPage || null,
+        queryFn: ({ pageParam = null }) => {
+            const cursorParam = pageParam ? `&cursor=${pageParam}` : "";
+            return getAllVideos(`limit=${limit}${cursorParam}`);
+        },
+        getNextPageParam: (lastPage) => lastPage?.data?.nextCursor || null,
+        initialPageParam: null,
     })
 }
 
@@ -69,6 +72,7 @@ const useGetRelatedVideos = (videoId) => {
         queryKey: ['videos', 'related_videos', { videoId }],
         queryFn: () => getRelatedVideos(videoId),
         getNextPageParam: (lastPage) => lastPage?.data?.nextPage || null,
+        initialPageParam: 1,
         keepPreviousData: true,
     })
 }

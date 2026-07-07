@@ -1,5 +1,5 @@
 import asyncHandler from '../utils/AsyncHandler'
-import apiClient from './apiClient'
+import { apiClient } from './apiClient'
 
 const COMMENT_BASE_URL = '/api/v1/comments'
 

@@ -84,10 +84,10 @@ const useUpdateCoverImage = () => {
     })
 }
 
-const useGetUserChannelInfo = (channelId, userId, fetchOnMount = true) => {
+const useGetUserChannelInfo = (username, fetchOnMount = true) => {
     return useQuery({
-        queryKey: ['user', channelId, userId],
-        queryFn: () => getUserChannelInfo(channelId, userId),
+        queryKey: ['user', username],
+        queryFn: () => getUserChannelInfo(username),
         enabled: fetchOnMount
     })
 }
@@ -99,6 +99,7 @@ const useGetUserWatchHistory = (user, limit = 3) => {
         getNextPageParam: (lastPage) => {
             return lastPage?.data?.nextPage || null
         },
+        initialPageParam: 1,
         keepPreviousData: true,
         enabled: !!user
     })

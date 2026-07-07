@@ -5,7 +5,7 @@ import { apiClient } from "./apiClient";
 const VIDEO_BASE_URL = '/api/v1/videos';
 
 const getVideoById = (videoId) => asyncHandler(async () => {
-    const res = await apiClient.get(`${VIDEO_BASE_URL}/${videoId}`);
+    const res = await apiClient.get(`${VIDEO_BASE_URL}/getvideo/${videoId}`);
     return res.data;
 });
 

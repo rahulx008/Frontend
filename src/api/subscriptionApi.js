@@ -1,7 +1,7 @@
-import { asyncHandler } from "../utils/AsyncHandler.js";
-import apiClient from "./apiClient";
+import asyncHandler from "../utils/AsyncHandler.js";
+import { apiClient } from "./apiClient";
 
-const SUBSCRIPTIONS_BASE_URL = '/subscriptions'
+const SUBSCRIPTIONS_BASE_URL = '/api/v1/subscriptions'
 
 // Fetches a list of channels the user is subscribed to
 const getUserSubscribedChannels = (subscriberId, limit = 6, page = 1) => asyncHandler(async () => {
@@ -15,9 +15,15 @@ const getVideosFromSubscribedChannels = (limit = 12, page = 1) => asyncHandler(a
     return res.data;
 });
 
-// Toggles subscription status for a specific channel
-const toggleSubscription = (channelId) => asyncHandler(async () => {
-    const res = await apiClient.post(`${SUBSCRIPTIONS_BASE_URL}/c/${channelId}`);
+// Subscribes to a channel
+const subscribeChannel = (channelId) => asyncHandler(async () => {
+    const res = await apiClient.post(`${SUBSCRIPTIONS_BASE_URL}/subscribe/${channelId}`);
+    return res.data;
+});
+
+// Unsubscribes from a channel
+const unsubscribeChannel = (channelId) => asyncHandler(async () => {
+    const res = await apiClient.post(`${SUBSCRIPTIONS_BASE_URL}/unsubscribe/${channelId}`);
     return res.data;
 });
 
@@ -29,6 +35,7 @@ const getSubscribers = (limit = 3, page = 1, sortField = "createdAt", sortOrder 
 export {
     getUserSubscribedChannels,
     getVideosFromSubscribedChannels,
-    toggleSubscription,
+    subscribeChannel,
+    unsubscribeChannel,
     getSubscribers
 };

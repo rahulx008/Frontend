@@ -12,6 +12,7 @@ export default function VideoCard({
   //this is click function that will be called when the video card is clicked.It can be used to navigate to the video detail page or perform any other action related to the video.
   const handleClick = () => {
     console.log("VideoCard clicked:", title);
+    if (onClick) onClick();
   }
 
   return (
@@ -62,16 +63,21 @@ export default function VideoCard({
         .yt-card {
           width: 100%;
           cursor: pointer;
-          font-family: Arial, sans-serif;
+          font-family: var(--sans);
+          transition: transform 0.2s ease-in-out;
+        }
+
+        .yt-card:hover {
+          transform: translateY(-2px);
         }
 
         .thumbnail-wrapper {
           position: relative;
           width: 100%;
           aspect-ratio: 16 / 9;
-          border-radius: 12px;
+          border-radius: var(--radius-xl);
           overflow: hidden;
-          background: #f1f1f1;
+          background: var(--border-color);
         }
 
         .thumbnail {
@@ -85,12 +91,12 @@ export default function VideoCard({
           position: absolute;
           bottom: 8px;
           right: 8px;
-          background: rgba(0, 0, 0, 0.85);
-          color: white;
-          font-size: 12px;
-          font-weight: 500;
-          padding: 3px 5px;
-          border-radius: 4px;
+          background: rgba(0, 0, 0, 0.8);
+          color: #ffffff;
+          font-size: 11px;
+          font-weight: 600;
+          padding: 3px 6px;
+          border-radius: var(--radius-sm);
           line-height: 1;
         }
 
@@ -103,9 +109,10 @@ export default function VideoCard({
         .avatar {
           width: 36px;
           height: 36px;
-          border-radius: 50%;
+          border-radius: var(--radius-full);
           object-fit: cover;
           flex-shrink: 0;
+          border: 1px solid var(--border-color);
         }
 
         .info {
@@ -115,68 +122,75 @@ export default function VideoCard({
 
         .title {
           margin: 0;
-          color: #ffffff;
-          font-size: 16px;
-          font-weight: 500;
+          color: var(--text-primary);
+          font-size: 15px;
+          font-weight: 600;
           line-height: 1.4;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
+          transition: color 0.15s ease;
+        }
+
+        .yt-card:hover .title {
+          color: var(--primary);
         }
 
         .channel-row {
           display: flex;
           align-items: center;
           gap: 4px;
-          margin-top: 6px;
+          margin-top: 4px;
         }
 
         .channel {
-          font-size: 14px;
-          color: #cbd5e1; /* light gray for dark background */
+          font-size: 13px;
+          color: var(--text-secondary);
+          font-weight: 500;
         }
 
         .verified {
-          width: 14px;
-          height: 14px;
+          width: 13px;
+          height: 13px;
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 50%;
-          background: #64748b;
-          color: white;
-          font-size: 10px;
+          border-radius: var(--radius-full);
+          background: var(--primary);
+          color: #ffffff;
+          font-size: 9px;
         }
 
         .meta {
           margin: 2px 0 0;
-          font-size: 14px;
-          color: #94a3b8;
+          font-size: 12px;
+          color: var(--text-tertiary);
         }
 
         .menu-btn {
           border: none;
           background: transparent;
-          color: #606060;
+          color: var(--text-tertiary);
           font-size: 18px;
           cursor: pointer;
           padding: 4px;
           height: fit-content;
+          transition: color 0.15s ease;
         }
 
         .menu-btn:hover {
-          color: #000;
+          color: var(--text-primary);
         }
 
         @media (max-width: 768px) {
           .title {
-            font-size: 15px;
+            font-size: 14px;
           }
 
           .channel,
           .meta {
-            font-size: 13px;
+            font-size: 12px;
           }
         }
 

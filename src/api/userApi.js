@@ -8,15 +8,15 @@ const USER_BASE_URL = '/api/v1/users'
 //     return res.data;
 // })
 
-// Fetches user channel information based on user ID
-const getUserChannelInfo = (userId) => asyncHandler(async () => {
-    const response = await apiClient.get(`${USER_BASE_URL}/channel/${userId}`)
+// Fetches user channel information based on username
+const getUserChannelInfo = (username) => asyncHandler(async () => {
+    const response = await apiClient.post(`${USER_BASE_URL}/get-channel-details/${username}`)
     return response.data;
 })
 
 // Fetches videos of a user with applied filters
 const getUserVideos = (userId, filters) => asyncHandler(async () => {
-    const res = await apiClient.get(`videos?userId=${userId}&${filters}`)
+    const res = await apiClient.get(`/api/v1/videos/getAllVideos?userId=${userId}&${filters}`)
     return res.data
 })
 
@@ -48,31 +48,31 @@ const getCurrentUser = () => asyncHandler(async () => {
 
 // Fetches user's watch history with pagination
 const getUserWatchHistory = (limit = 3, page = 1) => asyncHandler(async () => {
-    const res = await apiClient.get(`${USER_BASE_URL}/watch-history?limit=${limit}&page=${page}`)
+    const res = await apiClient.get(`${USER_BASE_URL}/get-watch-history?limit=${limit}&page=${page}`)
     return res.data
 })
 
 // Changes user's password with the provided data
 const changePassword = (body) => asyncHandler(async () => {
-    const res = await apiClient.post(`${USER_BASE_URL}/change-password`, body)
+    const res = await apiClient.post(`${USER_BASE_URL}/update-user-password`, body)
     return res.data
 })
 
 // Updates user account details with new information
 const updateAccountDetails = (details) => asyncHandler(async () => {
-    const res = await apiClient.patch(`${USER_BASE_URL}/update-account`, details)
+    const res = await apiClient.patch(`${USER_BASE_URL}/update-account-details`, details)
     return res.data
 })
 
 // Clears user's watch history
 const clearWatchHistory = () => asyncHandler(async () => {
-    const res = await apiClient.delete(`${USER_BASE_URL}/watch-history`);
+    const res = await apiClient.delete(`${USER_BASE_URL}/clear-watch-history`);
     return res.data
 })
 
 // Updates user's avatar with the provided file
 const updateAvatar = (avatar) => asyncHandler(async () => {
-    const res = await apiClient.patch(`${USER_BASE_URL}/avatar`, avatar,
+    const res = await apiClient.patch(`${USER_BASE_URL}/update-avatar`, avatar,
         { headers: { "Content-Type": 'multipart/form-data' } }
     )
     return res.data
@@ -80,7 +80,7 @@ const updateAvatar = (avatar) => asyncHandler(async () => {
 
 // Updates user's cover image with the provided file
 const updateCoverImage = (coverImage) => asyncHandler(async () => {
-    const res = await apiClient.patch(`${USER_BASE_URL}/cover-image`, coverImage,
+    const res = await apiClient.patch(`${USER_BASE_URL}/update-cover-image`, coverImage,
         { headers: { "Content-Type": 'multipart/form-data' } }
     )
     return res.data

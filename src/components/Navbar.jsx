@@ -9,7 +9,7 @@ import {
   IconButton
 } from '@radix-ui/themes'
 import { useTheme } from 'next-themes'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/authContext'
 import useDebounce from '../hooks/useDebounce'
@@ -22,6 +22,10 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
   const [searchParams, setSearchParams] = useSearchParams('')
   const [query, setQuery] = useState(searchParams.get('query') || '')
   const [showSearchBar, setShowSearchBar] = useState(false)
+
+  useEffect(() => {
+    setQuery(searchParams.get('query') || '')
+  }, [searchParams])
 
   const debouncedQuery = useDebounce(query)
   const navigate = useNavigate()
@@ -151,7 +155,7 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
 
     // </>
     <>
-      <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
+      <header className="sticky top-0 z-50 bg-surface border-b border-border-main shadow-sm transition-colors duration-200">
         <div className="h-16 px-6 flex items-center justify-between">
 
           {/* Left Section */}
@@ -161,15 +165,16 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
               variant="ghost"
               radius="full"
               onClick={handleSidebarToggle}
+              className="text-text-main hover:bg-surface-hover"
             >
               <HamburgerMenuIcon width={20} height={20} />
             </IconButton>
 
             <Link
               to="/Searchresult"
-              className="text-2xl font-bold text-blue-600 tracking-tight"
+              className="text-2xl font-bold text-primary tracking-tight"
             >
-              VidStream
+              Clipster
             </Link>
 
           </div>
@@ -181,7 +186,7 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
               onSubmit={handleSearch}
               className="w-full"
             >
-              <div className="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden border border-gray-300 dark:border-gray-700">
+              <div className="flex items-center bg-bg-main rounded-full overflow-hidden border border-border-main focus-within:border-primary transition-colors">
 
                 <input
                   ref={inputRef}
@@ -189,13 +194,13 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search videos..."
-                  className="flex-1 px-5 py-3 bg-transparent outline-none"
+                  className="flex-1 px-5 py-3 bg-transparent outline-none text-text-main placeholder-text-muted"
                 />
 
                 <button
                   type="submit"
                   disabled={isFetching}
-                  className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white transition"
+                  className="px-6 py-3 bg-primary hover:bg-primary-hover text-white transition-colors duration-150 cursor-pointer"
                 >
                   <MagnifyingGlassIcon width={24} height={24} />
                 </button>
@@ -213,7 +218,7 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
               onClick={() =>
                 setTheme(theme === "light" ? "dark" : "light")
               }
-              className="w-10 h-10 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center transition"
+              className="w-10 h-10 rounded-full hover:bg-surface-hover flex items-center justify-center transition-colors text-text-main cursor-pointer"
             >
               <ThemeIcon />
             </button>
@@ -221,26 +226,26 @@ function Navbar({ toggleMenu, toggleDashboardSidebar }) {
             {isAuthenticated ? (
               <>
                 {/* Username */}
-                <span className="hidden md:block text-sm font-medium">
+                <span className="hidden md:block text-sm font-medium text-text-main">
                   {user.username}
                 </span>
 
                 {/* Avatar */}
-                <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-semibold uppercase">
+                <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold uppercase">
                   {user.username?.charAt(0)}
                 </div>
 
                 <button
                   onClick={handleLogout}
                   disabled={logoutLoading}
-                  className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition"
+                  className="px-4 py-2 rounded-lg bg-danger hover:opacity-90 text-white transition cursor-pointer text-sm font-semibold"
                 >
                   Logout
                 </button>
               </>
             ) : (
               <Link to="/login">
-                <button className="px-5 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition">
+                <button className="px-5 py-2 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition cursor-pointer text-sm font-semibold">
                   Login
                 </button>
               </Link>
