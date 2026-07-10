@@ -15,17 +15,17 @@ const usePublishVideo = () => {
 }
 
 const useGetVideoById = (videoId) => {
-  const queryClient = useQueryClient();
-  return useQuery({
-    queryKey: ['video', videoId],
-    queryFn: async () => {
-      const data = await getVideoById(videoId);
-      // Invalidate the user history query
-      // queryClient.invalidateQueries({ queryKey: ['watch_history'] });
-      // queryClient.invalidateQueries({ queryKey: ['stats'] });
-      return data;
-    },
-  })
+    const queryClient = useQueryClient();
+    return useQuery({
+        queryKey: ['video', videoId],
+        queryFn: async () => {
+            const data = await getVideoById(videoId);
+            // Invalidate the user history query
+            // queryClient.invalidateQueries({ queryKey: ['watch_history'] });
+            // queryClient.invalidateQueries({ queryKey: ['stats'] });
+            return data;
+        },
+    })
 }
 const useUpdateVideo = (videoId) => {
     return useMutation({

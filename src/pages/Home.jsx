@@ -35,7 +35,7 @@ export default function Home() {
     isFetchingNextPage
   } = useInfiniteQuery({
     queryKey: ["videos_feed", activeCategory],
-    queryFn: ({ pageParam = null }) => 
+    queryFn: ({ pageParam = null }) =>
       getAllVideos(`category=${activeCategory}&limit=12${pageParam ? `&cursor=${pageParam}` : ""}`),
     getNextPageParam: (lastPage) => lastPage?.data?.nextCursor || null,
     initialPageParam: null,
@@ -53,12 +53,12 @@ export default function Home() {
   return (
     <div className="min-h-[calc(100vh-64px)] bg-bg-main text-text-main p-4 md:p-6 text-left transition-colors duration-200">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Hero Section */}
         <div className="relative rounded-2xl overflow-hidden mb-8 bg-gradient-to-r from-blue-900/80 via-indigo-900/80 to-purple-950/80 p-6 md:p-10 border border-border-main shadow-2xl">
           <div className="absolute top-20 left-0 w-80 h-80 bg-white/5 rotate-45 rounded-3xl pointer-events-none"></div>
           <div className="absolute top-0 right-0 w-72 h-72 bg-black/10 rotate-45 rounded-3xl pointer-events-none"></div>
-          
+
           <div className="relative z-10 max-w-xl">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary/15 text-primary border border-primary/30 mb-4 uppercase tracking-wider">
               <Sparkles className="h-3 w-3" />
@@ -79,11 +79,10 @@ export default function Home() {
             <button
               key={cat.name}
               onClick={() => setActiveCategory(cat.name)}
-              className={`px-4 py-1.5 rounded-full text-sm font-semibold capitalize whitespace-nowrap transition-all duration-200 border cursor-pointer ${
-                activeCategory === cat.name
+              className={`px-4 py-1.5 rounded-full text-sm font-semibold capitalize whitespace-nowrap transition-all duration-200 border cursor-pointer ${activeCategory === cat.name
                   ? "bg-text-main text-bg-main border-text-main shadow-md scale-105"
                   : "bg-surface hover:bg-surface-hover text-text-sub border-border-main"
-              }`}
+                }`}
             >
               {cat.label}
             </button>

@@ -150,8 +150,8 @@ export default function Watch() {
                   onClick={() => toggleSubscribeMutation.mutate({ username: video.owner?.username, isSubscribed: isOwnerSubscribed })}
                   disabled={toggleSubscribeMutation.isLoading}
                   className={`ml-4 px-5 py-2 rounded-full text-sm font-semibold transition cursor-pointer ${isOwnerSubscribed
-                      ? "bg-surface hover:bg-surface-hover text-text-sub border border-border-main"
-                      : "bg-primary hover:bg-primary-hover text-white"
+                    ? "bg-surface hover:bg-surface-hover text-text-sub border border-border-main"
+                    : "bg-primary hover:bg-primary-hover text-white"
                     }`}
                 >
                   {isOwnerSubscribed ? "Subscribed" : "Subscribe"}
@@ -165,8 +165,8 @@ export default function Watch() {
                 onClick={() => toggleLikeMutation.mutate()}
                 disabled={toggleLikeMutation.isLoading}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition cursor-pointer ${isVideoLiked
-                    ? "bg-primary/20 text-primary border border-primary/40"
-                    : "bg-surface hover:bg-surface-hover text-text-sub border border-border-main"
+                  ? "bg-primary/20 text-primary border border-primary/40"
+                  : "bg-surface hover:bg-surface-hover text-text-sub border border-border-main"
                   }`}
               >
                 <ThumbsUp className={`h-4 w-4 ${isVideoLiked ? "fill-current" : ""}`} />
