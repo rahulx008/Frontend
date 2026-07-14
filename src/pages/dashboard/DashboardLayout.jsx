@@ -1,11 +1,12 @@
 import React from "react";
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, useNavigate, useOutletContext } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
 import { LayoutDashboard, Video, Settings, ArrowLeft, BarChart2 } from "lucide-react";
 
 export default function DashboardLayout() {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const { openDashboardSidebar } = useOutletContext();
 
   if (!isAuthenticated) {
     navigate("/login");
@@ -15,7 +16,16 @@ export default function DashboardLayout() {
   return (
     <div className="min-h-[calc(100vh-64px)] bg-bg-main text-text-main flex text-left transition-colors duration-200">
       {/* Studio Sidebar */}
-      <aside className="w-64 bg-surface-sidebar border-r border-border-main flex flex-col justify-between hidden md:flex">
+      <aside
+        className={`bg-surface-sidebar border-r border-border-main flex flex-col justify-between transition-all duration-300 ease-in-out
+          fixed top-16 left-0 h-[calc(100vh-64px)] z-40
+          md:sticky md:top-16 md:translate-x-0
+          ${openDashboardSidebar 
+            ? "translate-x-0 w-64 flex" 
+            : "-translate-x-full w-0 hidden md:hidden"
+          }
+        `}
+      >
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center font-bold text-white uppercase">

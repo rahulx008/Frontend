@@ -49,11 +49,11 @@ function Root() {
       />
       
       <div className="flex flex-1 relative">
-        {!isVideoRoute && (
-          <Sidebar showMenu={showMenu} toggleMenu={toggleMenu} />
+        {!isDashboardRoute && (
+          <Sidebar showMenu={showMenu} toggleMenu={toggleMenu} isVideoRoute={isVideoRoute} />
         )}
         <main className="flex-1 w-full overflow-x-hidden">
-          <Outlet />
+          <Outlet context={{ openDashboardSidebar, toggleDashboardSidebar }} />
         </main>
       </div>
 

@@ -5,7 +5,7 @@ import { Navigate, Outlet, useOutletContext } from 'react-router-dom'
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth()
 
-  return isAuthenticated ? <Outlet context={useOutletContext()} /> : <Navigate to={'/'} />
+  return isAuthenticated ? <Outlet context={useOutletContext()} /> : <Navigate to={'/login'} />
 
 }
 

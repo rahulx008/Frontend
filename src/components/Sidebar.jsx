@@ -9,7 +9,7 @@ import { SITE_NAME } from '../constants'
 
 const SidebarContext = createContext();
 
-function Sidebar({ showMenu, toggleMenu }) {
+function Sidebar({ showMenu, toggleMenu, isVideoRoute }) {
   const { logout, isAuthenticated, logoutLoading } = useAuth()
   const [showCategories, setShowCategories] = useState(true)
   const topTabTrap = useRef(null)
@@ -23,6 +23,7 @@ function Sidebar({ showMenu, toggleMenu }) {
       name: 'Home',
       slug: '/',
       icon: Home,
+      hidden: false,
     },
     {
       name: 'Subscriptions',
@@ -185,7 +186,15 @@ function Sidebar({ showMenu, toggleMenu }) {
 
   return (
     <aside
-      className={`fixed w-64 top-0 md:h-[calc(100vh-64px)] h-screen transition-transform ease-in-out duration-[300ms] md:sticky md:top-16 ${showMenu ? ' translate-x-0' : ' md:translate-x-0 -translate-x-full md:w-auto'} z-[100] md:z-30 border-r border-border-main bg-surface-sidebar`}
+      className={
+        isVideoRoute
+          ? `fixed w-64 top-0 h-screen transition-transform ease-in-out duration-[300ms] ${
+              showMenu ? "translate-x-0" : "-translate-x-full"
+            } z-[100] border-r border-border-main bg-surface-sidebar`
+          : `fixed w-64 top-0 md:h-[calc(100vh-64px)] h-screen transition-transform ease-in-out duration-[300ms] md:sticky md:top-16 ${
+              showMenu ? "translate-x-0" : "md:translate-x-0 -translate-x-full md:w-auto"
+            } z-[100] md:z-30 border-r border-border-main bg-surface-sidebar`
+      }
     >
       <span ref={topTabTrap} tabIndex={"0"} />
       <div className="flex items-center h-16 gap-3 px-6 md:hidden bg-surface-sidebar border-b border-border-main">

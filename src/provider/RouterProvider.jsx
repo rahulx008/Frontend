@@ -14,15 +14,6 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<RootLayout />}>
       <Route path="/" element={<Root />}>
-        {/* Home Page */}
-        <Route
-          index
-          lazy={() =>
-            import("../pages/Home.jsx").then(({ default: Home }) => ({
-              Component: Home,
-            }))
-          }
-        />
 
         {/* Login Page */}
         <Route element={<PublicRoute />}>
@@ -44,32 +35,6 @@ const router = createBrowserRouter(
           />
         </Route>
 
-        <Route
-          path="searchresult"
-          lazy={() =>
-            import("../components/VideoGrid.jsx").then(({ default: SearchResult }) => ({
-              Component: SearchResult,
-            }))
-          }
-        />
-
-        {/* Public Video Watch and Channel pages */}
-        <Route
-          path="watch/:videoId"
-          lazy={() =>
-            import("../pages/Watch.jsx").then(({ default: Watch }) => ({
-              Component: Watch,
-            }))
-          }
-        />
-        <Route
-          path="channel/:username"
-          lazy={() =>
-            import("../pages/Channel.jsx").then(({ default: Channel }) => ({
-              Component: Channel,
-            }))
-          }
-        />
 
         <Route
           path="privacy"
@@ -100,6 +65,46 @@ const router = createBrowserRouter(
 
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
+          {/* Home Page */}
+          <Route
+            index
+            lazy={() =>
+              import("../pages/Home.jsx").then(({ default: Home }) => ({
+                Component: Home,
+              }))
+            }
+          />
+
+          {/* Search Result Page */}
+          <Route
+            path="searchresult"
+            lazy={() =>
+              import("../components/VideoGrid.jsx").then(({ default: SearchResult }) => ({
+                Component: SearchResult,
+              }))
+            }
+          />
+
+          {/* Video Watch Page */}
+          <Route
+            path="watch/:videoId"
+            lazy={() =>
+              import("../pages/Watch.jsx").then(({ default: Watch }) => ({
+                Component: Watch,
+              }))
+            }
+          />
+
+          {/* Channel Page */}
+          <Route
+            path="channel/:username"
+            lazy={() =>
+              import("../pages/Channel.jsx").then(({ default: Channel }) => ({
+                Component: Channel,
+              }))
+            }
+          />
+
           {/* Logout Page */}
           <Route
             path="logout"

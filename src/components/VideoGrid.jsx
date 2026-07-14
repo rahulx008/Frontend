@@ -13,10 +13,18 @@ export default function VideoGrid() {
   const { 
     data: videos = [], 
     isLoading: loadingResults, 
+    isError,
+    error,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage 
-  } = useFetchVideos(searchParams)
+  } = useFetchVideos(searchParams);
+
+  useEffect(() => {
+    if (isError) {
+      console.error("Search query failed:", error);
+    }
+  }, [isError, error]);
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -76,6 +84,11 @@ export default function VideoGrid() {
         {loadingResults ? (
           <div className="flex justify-center items-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+          </div>
+        ) : isError ? (
+          <div className="text-center py-20 bg-surface rounded-2xl border border-border-main">
+            <p className="text-danger font-semibold text-lg">Failed to load search results.</p>
+            <p className="text-text-muted text-sm mt-1">{error?.response?.data?.message || error?.message || "Check your server connection and try again."}</p>
           </div>
         ) : resultVideos.length === 0 && resultChannels.length === 0 ? (
           <div className="text-center py-20 bg-surface rounded-2xl border border-border-main">
