@@ -1,5 +1,5 @@
 import axios from "axios";
-import asyncHandler from "../utils/AsyncHandler";
+import asyncHandler from "../utils/asyncHandler";
 import { getAuthSetters } from "../context/authContext";
 import { logoutUser } from "../api/userApi";
 

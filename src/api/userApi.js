@@ -1,4 +1,4 @@
-import asyncHandler  from "../utils/AsyncHandler.js";
+import asyncHandler  from "../utils/asyncHandler.js";
 import {apiClient} from "./apiClient"
 
 const USER_BASE_URL = '/api/v1/users'

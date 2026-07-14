@@ -29,7 +29,7 @@ const router = createBrowserRouter(
           <Route
             path="login"
             lazy={() =>
-              import("../pages/auth/Login.jsx").then(({ default: Login }) => ({
+              import("../pages/auth/login.jsx").then(({ default: Login }) => ({
                 Component: Login,
               }))
             }
@@ -104,7 +104,7 @@ const router = createBrowserRouter(
           <Route
             path="logout"
             lazy={() =>
-              import("../pages/auth/Logout.jsx").then(({ default: Logout }) => ({
+              import("../pages/auth/logout.jsx").then(({ default: Logout }) => ({
                 Component: Logout,
               }))
             }

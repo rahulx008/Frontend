@@ -1,4 +1,4 @@
-import asyncHandler from "../utils/AsyncHandler";
+import asyncHandler from "../utils/asyncHandler";
 import { apiClient } from "./apiClient";
 
 
