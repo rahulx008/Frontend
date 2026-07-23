@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useGetUserChannelInfo } from "../queries/userQueries";
-import { getUserVideos, updateAvatar, updateCoverImage } from "../api/userApi";
-import { subscribeChannel, unsubscribeChannel } from "../api/subscriptionApi";
-import { useAuth } from "../context/authContext";
-import VideoCard from "../components/VideoCard";
-import { Camera, Edit, PlaySquare, Info, Users, Check } from "lucide-react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Camera, Info, PlaySquare, Users } from "lucide-react";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate, useParams } from "react-router-dom";
+import { subscribeChannel, unsubscribeChannel } from "../api/subscriptionApi";
+import { getUserVideos, updateAvatar, updateCoverImage } from "../api/userApi";
+import VideoCard from "../components/VideoCard";
+import { useAuth } from "../context/authContext";
+import { useGetUserChannelInfo } from "../queries/userQueries";
 
 export default function Channel() {
   const { username } = useParams();
@@ -122,7 +122,7 @@ export default function Channel() {
             {/* Elegant placeholder */}
           </div>
         )}
-        
+
         {isOwnChannel && (
           <label className="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 border border-border-main px-3.5 py-1.5 rounded-lg text-xs font-semibold text-white flex items-center gap-2 cursor-pointer transition">
             <Camera className="h-4 w-4" />
@@ -160,7 +160,7 @@ export default function Channel() {
               <p className="text-text-sub text-sm mt-1 flex items-center gap-1.5 font-light">
                 @{channel.username}
               </p>
-              
+
               <div className="flex flex-wrap gap-x-4 gap-y-1 text-text-muted text-xs mt-3 font-semibold">
                 <span className="flex items-center gap-1">
                   <Users className="h-3.5 w-3.5" />
@@ -177,8 +177,8 @@ export default function Channel() {
           {/* Action button: Subscribe or Edit Profile */}
           <div className="flex items-center gap-3 w-full sm:w-auto">
             {isOwnChannel ? (
-              <button 
-                onClick={() => navigate("/dashboard")} 
+              <button
+                onClick={() => navigate("/dashboard")}
                 className="w-full sm:w-auto px-6 py-2.5 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg shadow-md transition text-center cursor-pointer"
               >
                 Go to Creator Studio
@@ -187,11 +187,10 @@ export default function Channel() {
               <button
                 onClick={() => toggleSubscribeMutation.mutate()}
                 disabled={toggleSubscribeMutation.isLoading}
-                className={`w-full sm:w-auto px-6 py-2.5 rounded-full font-semibold transition cursor-pointer ${
-                  channel.isSubscribed
+                className={`w-full sm:w-auto px-6 py-2.5 rounded-full font-semibold transition cursor-pointer ${channel.isSubscribed
                     ? "bg-surface hover:bg-surface-hover text-text-sub border border-border-main"
                     : "bg-text-main text-bg-main hover:opacity-90"
-                }`}
+                  }`}
               >
                 {channel.isSubscribed ? "Subscribed" : "Subscribe"}
               </button>
@@ -203,21 +202,19 @@ export default function Channel() {
         <div className="flex border-b border-border-main mt-6">
           <button
             onClick={() => setActiveTab("videos")}
-            className={`px-5 py-3 text-sm font-semibold border-b-2 transition cursor-pointer ${
-              activeTab === "videos"
+            className={`px-5 py-3 text-sm font-semibold border-b-2 transition cursor-pointer ${activeTab === "videos"
                 ? "border-primary text-primary"
                 : "border-transparent text-text-sub hover:text-text-main"
-            }`}
+              }`}
           >
             Videos ({videos.length})
           </button>
           <button
             onClick={() => setActiveTab("about")}
-            className={`px-5 py-3 text-sm font-semibold border-b-2 transition cursor-pointer ${
-              activeTab === "about"
+            className={`px-5 py-3 text-sm font-semibold border-b-2 transition cursor-pointer ${activeTab === "about"
                 ? "border-primary text-primary"
                 : "border-transparent text-text-sub hover:text-text-main"
-            }`}
+              }`}
           >
             About
           </button>
@@ -259,7 +256,7 @@ export default function Channel() {
                 Channel Description
               </h3>
               <p className="text-text-secondary font-light leading-relaxed">
-                Welcome to @{channel.username}'s channel on VidStream! Explore tutorials, gameplay, music, podcasts, or courses shared here.
+                Welcome to @{channel.username}'s channel on Clipster! Explore tutorials, gameplay, music, podcasts, or courses shared here.
               </p>
               <div className="mt-6 flex flex-col gap-2.5 text-sm border-t border-border-main pt-6">
                 <div className="flex justify-between text-text-muted">

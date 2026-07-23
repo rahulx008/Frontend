@@ -9,11 +9,11 @@ import { useGetCurrentUser, useLogin, useLogout, useRegister } from "../queries/
     authentication state across the application.
 */
 let authSetters = {
-    setUser: () => {},
+    setUser: () => { },
 };
 
 /* Here we are setting the auth setter functions 
-which will be used to update the auth context from outside the provider component */ 
+which will be used to update the auth context from outside the provider component */
 export const setauthSetters = (setUserFn) => {
     authSetters.setUser = setUserFn;
 }
@@ -26,9 +26,9 @@ export const getAuthSetters = () => authSetters;
 
 const AuthContext = createContext({
     user: null,
-    register: async ()=>{},
-    login: async ()=>{},
-    logout: async ()=>{},
+    register: async () => { },
+    login: async () => { },
+    logout: async () => { },
     isLoading: false,
     isAuthenticated: false,
 });
@@ -44,14 +44,14 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('user');
             return null;
         }
-    }); 
+    });
 
     // This function will be called to update the user state and also persist it in local storage, ensuring that the user's authentication state is maintained across page reloads.
-        const hasAccessToken = Boolean(localStorage.getItem("accessToken"));
+    const hasAccessToken = Boolean(localStorage.getItem("accessToken"));
 
-        const { data: currentUser, isLoading: loadingUserData } = useGetCurrentUser({
-            enabled: !!user?._id && hasAccessToken,
-        });
+    const { data: currentUser, isLoading: loadingUserData } = useGetCurrentUser({
+        enabled: !!user?._id && hasAccessToken,
+    });
 
     const { mutateAsync: registerMutation, isLoading: registering } = useRegister();
     const { mutateAsync: loginMutation, isLoading: loggingIn } = useLogin();
@@ -67,14 +67,14 @@ export const AuthProvider = ({ children }) => {
         if (currentUser?.data) {
             setUser(currentUser.data);
             localStorage.setItem("user", JSON.stringify(currentUser.data));
-        } 
+        }
     }, [currentUser, user]);
 
     useEffect(() => {
         setauthSetters(setUser);
     }, [setUser]);
 
-    
+
     const login = useCallback(
         async (data) => {
             const res = await loginMutation(data);
@@ -103,9 +103,8 @@ export const AuthProvider = ({ children }) => {
             console.log("Logged out successfully");
         } catch (error) {
             console.error("Logout failed:", error);
-            console.error("Logout failed. Please try again.");
         }
-        }, [logoutMutation]
+    }, [logoutMutation]
     );
 
     const data = {

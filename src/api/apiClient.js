@@ -4,7 +4,7 @@ import { getAuthSetters } from "../context/authContext";
 import { logoutUser } from "../api/userApi";
 
 export const apiClient = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL ,
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true, // include cookies in requests
     headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ apiClient.interceptors.request.use(
         }
 
         return config;
-    }, 
+    },
     (error) => {
         return Promise.reject(error)
     }
@@ -36,7 +36,7 @@ const processQueue = (error, token = null) => {
     failedQueue.forEach(prom => {
         if (error) {
             prom.reject(error);
-        }else{
+        } else {
             prom.resolve(token);
         }
     });
@@ -54,15 +54,16 @@ apiClient.interceptors.response.use(
         // if there is no response (e.g., network error), reject the promise with the error
         // could be internet error, server down, etc.
         const originalRequest = error.config;
-        if(!error.response){
+        if (!error.response) {
             return Promise.reject(error);
         }
 
         //we'll use this to check if it is refresh request
-        const isRefreshRequest = originalRequest.url.includes('/api/v1/users/refresh-access-token'); 
+        const isRefreshRequest = originalRequest.url.includes('/api/v1/users/refresh-access-token');
+        const isLoginRequest = originalRequest.url.includes('/api/v1/users/login');
 
 
-        if (error.response.status === 401 && !isRefreshRequest && !originalRequest._retry) {
+        if (error.response.status === 401 && !isRefreshRequest && !isLoginRequest && !originalRequest._retry) {
 
             // if we are already refreshing, queue the request
             // return a promise that will resolve once the token is refreshed
@@ -85,10 +86,10 @@ apiClient.interceptors.response.use(
             isRefreshing = true;
 
             try {
-                
+
                 // Request a new access token using the refresh token
                 const refreshResponse = await apiClient.post('/api/v1/users/refresh-access-token', {}, { withCredentials: true });
-                
+
                 console.log('Refresh token response:', refreshResponse);
 
                 const newAccessToken = refreshResponse.data.data.accessToken;
@@ -96,7 +97,7 @@ apiClient.interceptors.response.use(
                 localStorage.setItem('accessToken', newAccessToken);
 
                 console.log('New access token obtained:', newAccessToken);
-                
+
                 // Process all queued requests with the new token
                 processQueue(null, newAccessToken);
 
@@ -106,7 +107,7 @@ apiClient.interceptors.response.use(
                 // Retry the original request with the new token
                 return apiClient(originalRequest);
 
-            }catch (refreshError) {
+            } catch (refreshError) {
                 // If the refresh token request fails, log the error and reject all queued requests
                 console.error('Refresh token failed', refreshError);
 
@@ -138,5 +139,5 @@ apiClient.interceptors.response.use(
         }
         return Promise.reject(error);
     }
-    
+
 )

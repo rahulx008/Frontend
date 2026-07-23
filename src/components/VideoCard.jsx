@@ -59,7 +59,7 @@ export default function VideoCard({
         </button>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .yt-card {
           width: 100%;
           cursor: pointer;

@@ -1,5 +1,5 @@
-import asyncHandler  from "../utils/asyncHandler.js";
-import {apiClient} from "./apiClient"
+import asyncHandler from "../utils/asyncHandler.js";
+import { apiClient } from "./apiClient"
 
 const USER_BASE_URL = '/api/v1/users'
 
@@ -23,13 +23,16 @@ const getUserVideos = (userId, filters) => asyncHandler(async () => {
 // Logs in the user with provided data
 const loginUser = (data) => asyncHandler(async () => {
     const res = await apiClient.post(`${USER_BASE_URL}/login`, data)
+
+    //console.log("userApi : ", res.data);
     return res.data
+
 })
 
 // Registers a new user with the provided form data
 const registerUser = (formData) => asyncHandler(async () => {
     const res = await apiClient.post(`${USER_BASE_URL}/register`, formData, {
-    headers: { "Content-Type": 'multipart/form-data' }
+        headers: { "Content-Type": 'multipart/form-data' }
     })
     return res.data
 })

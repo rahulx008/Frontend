@@ -123,7 +123,7 @@ export default function VideoGrid() {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         .video-grid-section {
           width: 100%;
           padding: 24px;

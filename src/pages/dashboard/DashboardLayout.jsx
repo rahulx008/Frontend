@@ -1,7 +1,6 @@
-import React from "react";
-import { Outlet, NavLink, useNavigate, useOutletContext } from "react-router-dom";
+import { ArrowLeft, LayoutDashboard, Video } from "lucide-react";
+import { NavLink, Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import { useAuth } from "../../context/authContext";
-import { LayoutDashboard, Video, Settings, ArrowLeft, BarChart2 } from "lucide-react";
 
 export default function DashboardLayout() {
   const { user, isAuthenticated } = useAuth();
@@ -20,8 +19,8 @@ export default function DashboardLayout() {
         className={`bg-surface-sidebar border-r border-border-main flex flex-col justify-between transition-all duration-300 ease-in-out
           fixed top-16 left-0 h-[calc(100vh-64px)] z-40
           md:sticky md:top-16 md:translate-x-0
-          ${openDashboardSidebar 
-            ? "translate-x-0 w-64 flex" 
+          ${openDashboardSidebar
+            ? "translate-x-0 w-64 flex"
             : "-translate-x-full w-0 hidden md:hidden"
           }
         `}
@@ -42,17 +41,16 @@ export default function DashboardLayout() {
               to="/dashboard"
               end
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition ${
-                  isActive
-                    ? "bg-primary/10 text-primary border-l-4 border-primary pl-3"
-                    : "text-text-sub hover:bg-surface-hover hover:text-text-main"
+                `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition ${isActive
+                  ? "bg-primary/10 text-primary border-l-4 border-primary pl-3"
+                  : "text-text-sub hover:bg-surface-hover hover:text-text-main"
                 }`
               }
             >
               <Video className="h-4.5 w-4.5" />
               Content
             </NavLink>
-            
+
             <NavLink
               to={`/channel/${user?.username}`}
               className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-text-sub hover:bg-surface-hover hover:text-text-main transition"
@@ -69,7 +67,7 @@ export default function DashboardLayout() {
             className="flex items-center gap-2 text-xs font-bold text-text-muted hover:text-text-main transition cursor-pointer"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            Back to VidStream
+            Back to Clipster
           </button>
         </div>
       </aside>

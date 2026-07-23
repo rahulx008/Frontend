@@ -22,22 +22,30 @@ export default function Login() {
         setError('')
         try {
             setError('')
-            const loggedin = await login(formData)
-
-            console.log(loggedin);
-            navigate('/searchresult');
-
-        } catch (err) {
-            if (err) {
-                setError(err.message);
+            const loggedin = await login(formData);
+            // console.log('Login status: ', loggedin);
+            if (loggedin?.statusCode == 200) {
+                console.log('success');
+                navigate('/');
+            } else {
+                setError(loggedin.message);
             }
 
-            console.error('Login error : ', error);
+        } catch (err) {
+
+            console.log(err.status);
+            if (err.status === 400) {
+                setError("User not found");
+
+            } else if (err.status === 401) {
+                setError("Invalid credentials");
+
+            } else {
+                setError("Something went wrong");
+            }
+
         }
     };
-
-
-
 
     return (<>
 
@@ -58,6 +66,13 @@ export default function Login() {
                         Login
                     </h1>
 
+                    {/* Error Message */}
+                    {error && (
+                        <div className="text-red-500 text-sm mb-4">
+                            {error}
+                        </div>
+                    )}
+
                     {/* Username */}
                     <div className="text-left mt-3">
                         <label className="text-xs font-semibold text-text-sub uppercase tracking-wider">Username</label>
@@ -65,10 +80,11 @@ export default function Login() {
                     <div className="flex items-center border-b border-border-main py-3 mb-6 focus-within:border-primary transition-colors">
                         <PersonIcon className="text-text-muted mr-3" />
                         <input
-                          type="text"
-                          {...register("username")}
-                          placeholder="Type your username"
-                          className="w-full outline-none bg-transparent text-text-main placeholder-text-muted text-sm"
+                            type="text"
+                            required
+                            {...register("username")}
+                            placeholder="Type your username"
+                            className="w-full outline-none bg-transparent text-text-main placeholder-text-muted text-sm"
                         />
                     </div>
 
@@ -79,20 +95,21 @@ export default function Login() {
                     <div className="flex items-center border-b border-border-main py-3 focus-within:border-primary transition-colors">
                         <LockClosedIcon className="text-text-muted mr-3" />
                         <input
-                          type={showPassword ? "text" : "password"}
-                          {...register("password")}
-                          placeholder="Type your password"
-                          className="w-full outline-none bg-transparent text-text-main placeholder-text-muted text-sm"
+                            type={showPassword ? "text" : "password"}
+                            required
+                            {...register("password")}
+                            placeholder="Type your password"
+                            className="w-full outline-none bg-transparent text-text-main placeholder-text-muted text-sm"
                         />
                         <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="ml-2 focus:outline-none cursor-pointer"
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="ml-2 focus:outline-none cursor-pointer"
                         >
                             {showPassword ? (
-                              <EyeClosedIcon className="text-text-sub" />
+                                <EyeClosedIcon className="text-text-sub" />
                             ) : (
-                              <EyeOpenIcon className="text-text-sub" />
+                                <EyeOpenIcon className="text-text-sub" />
                             )}
                         </button>
                     </div>
@@ -100,8 +117,8 @@ export default function Login() {
                     {/* Forgot Password */}
                     <div className="text-right mt-3">
                         <a
-                          href="#"
-                          className="text-xs text-text-muted hover:text-primary transition"
+                            href="#"
+                            className="text-xs text-text-muted hover:text-primary transition"
                         >
                             Forgot Password?
                         </a>
@@ -109,7 +126,7 @@ export default function Login() {
 
                     {/* Login Button */}
                     <button className="w-full mt-8 py-3 rounded-xl bg-primary hover:bg-primary-hover text-white font-semibold text-sm shadow-lg active:scale-95 transition duration-150 cursor-pointer"
-                      type="submit"
+                        type="submit"
                     >
                         LOGIN
                     </button>
@@ -117,10 +134,10 @@ export default function Login() {
                     {/* Redirect to Signup */}
                     <div className="text-center mt-6 text-xs text-text-sub">
                         Don't have an account?{" "}
-                        <button 
-                          type="button"
-                          onClick={() => navigate("/signup")} 
-                          className="text-primary hover:underline font-semibold bg-transparent border-none cursor-pointer"
+                        <button
+                            type="button"
+                            onClick={() => navigate("/signup")}
+                            className="text-primary hover:underline font-semibold bg-transparent border-none cursor-pointer"
                         >
                             Sign up here
                         </button>
